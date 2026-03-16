@@ -1,0 +1,92 @@
+Programming Assignment 3: Deep Q Learning
+
+Overview:
+
+In this assignment, you will finish implementing a Deep Q Network (DQN) and train it to play the Atari game Ms Pacman.
+
+This assignment will consist of a written report and writing code. The questions you must address in your report (submitted in a seperate PDF) are listed in this document below (marked Report). You will write your code in the starter code .ipynb file and submit that (similar to Programming Assignment 1). You will also submit some of the output figures in the report. The pieces of code you must write are marked with “TODO” in the starter code and are described in this document (marked with Code)
+
+Please submit your PDF report and Python Notebook separately.
+
+Due: 11:59pm 3/20/26. There are no late submissions for this assignment.
+
+0. Setup
+
+Download the starter code (ProgrammingAssignment3.ipynb). You are welcome to run this assignment locally and not use Google Colab, but we (TAs and the Professor) will not be helping with any issues you have related to running this locally.
+
+After this, if you are using Google Colab, everything should be already set up and ready to go. Package installations and environment downloads will take several minutes. If you are running this on a different machine (CSIF or your own machine with a CUDA compatible GPU), then you may need to pip install the imported modules.
+
+Colab Setup:
+
+Important: Google Colab Free Tier has strict GPU usage limits. You will only have a few hours of free T4 GPU runtime per day. The usage limit for the CPU runtime is much more lenient. Because of this, you should do all initial development connected to the CPU runtime and then only switch to the GPU runtime when you are ready to actually train the model.
+
+1. Representation (14 pts)
+
+Report:
+Before jumping into the code, let’s think about the problem first. In your writeup, please answer the following:
+1. Using the starter code as reference (the cell labeled Q Network) draw the entire network as tensor computation showing the shape of each tensor at each and every layer.
+2. Why are there two Q networks (current and target) not one?
+3. What is the purpose of the following lines:
+
+if random.random() > epsilon:
+    ...
+else:
+    action = env.action_space.sample()
+
+Code:
+Given a state, write code to compute the q values and choose an action to perform (see the code cell in the starter code “2.5 Training Loop”).
+
+2. Learning (5 pts)
+
+Report:
+The Mitchell NN text covered in class suggests a quadratic loss function of (t-o)^2.
+Write down the loss function you will use with clearly explaining each part. This loss function must manifest the Q-update rule covered in Module D) covered in the Mitchell reinforcement learning text starting at page 383. Which of the two Q networks is this update rule applied to?
+
+Code:
+Implement your loss function (see the code cell in the starter code “2.5 Training Loop”).
+
+3. Replay Buffer (4 pts)
+
+Report:
+In typical Q-learning, we update the Q-table after each episode is played, typically referred to as on-line Q-learning. Instead we use a replay buffer for off-line Deep Q Learning. Concisely explain both the assumption that Deep Learning makes that on-line Q-learning does not satisfy and how the off-line Q-learning with a replay buffer satisfies this assumption.
+
+Code:
+Implement the “random sampling” function of replay memory/buffer. This should sample a batch from the replay buffer (see the code cell in the starter code “2.5 Training Loop”).
+
+4. Training (10 pts)
+
+Code:
+
+Train the model by running the cell in section “2.5 Training Loop”. You should train the model until you achieve “Last-20 average reward” larger than 500 for points and larger than 750 for full points. This should take at most 500,000 steps. The default number of training timesteps is 500,000 right now; you likely won’t need this many timesteps so feel free to interrupt the training process once you model has achieved a ‘Last-20 average reward’ of 500 or above (if you interrupt training, make sure that you still save the model weights).
+
+You may optimize different values for hyper-parameters such as η the learning rate, γ the discount rate, the exploitation and exploration, and the size of the replay buffer.
+
+Report:
+
+The training cell currently records the loss and rewards in ‘losses’ and ‘rewards’ respectively. Plot these rewards and losses over time and include the figures in your report. You do not need to provide the raw data in your submission, just the graphs.
+
+Please also provide proof that your model achieved a "Last-20 average reward" of 500 or higher at some point during training. This proof could simply be a screenshot.
+
+You obtain full points for this question if your total reward (for the last 20 episodes) the average reward exceeds 750. Be sure to report the hyper-parameters you use and any changes to the replay buffer and exploration-exploitation strategy.
+
+5. Bonus Points (3.3 points)
+
+Within 2,500,000 training episodes (no pre-loading Q-networks is allowed) you are free to change any aspect of the Q-network starter code to maximize the overall game score. This question is open-ended and can consist of any (or all!) of the following. Other possibilities exist.
+
+a) Changing the Q-learning algorithm
+b) Changing the reward function
+c) Changing the state representation
+d) Changing the action space
+e) Changing the exploration vs exploitation strategy
+f) Changing the Q network. This could involve modifying the existing structure
+
+You receive bonus points if you are in the top 50% of the class AND your highest-rank score is more than 1500. Bonus points will be given linearly proportional to the rank of game score: the highest-ranked score receives 3.30 points, with each subsequent rank decreasing by an increment of 0.05 points, down to a floor of 0.05 points.
+
+Report:
+
+Screenshot of game score (must be more than 1500) in PDF and upload the corresponding video.
+A few paragraphs describing what changes you made.
+
+Submission:
+- Python Notebook
+- PDF Report answering each and every requirement in Q1-Q5.
